@@ -1,21 +1,20 @@
+use std::env;
 mod actions;
 mod database;
 mod models;
 mod schema;
 
-use actions::{menu, post};
+use actions::post;
 
 fn main() {
-    loop {
-        let option = menu::menu();
-        match option {
-            1 => post::post_actions::show(),
-            2 => post::post_actions::create(),
-            3 => post::post_actions::publish(),
-            4 => post::post_actions::show_posts_drafts(),
-            5 => println!("Opção 4"),
-            6 => break,
-            _ => println!("opção inválida"),
-        }
+    let action = env::args().nth(1).expect("é necessario um argumento");
+
+    match action.as_str() {
+        "show" => post::post_actions::show(),
+        "create" => post::post_actions::create(),
+        "publish" => post::post_actions::publish(),
+        "drafts" => post::post_actions::show_posts_drafts(),
+        "delete" => post::post_actions::delete(),
+        _ => println!("opção inválida"),
     }
 }
