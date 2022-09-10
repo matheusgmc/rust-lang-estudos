@@ -6,7 +6,10 @@ pub mod post_actions {
         schema::posts::dsl::{posts, published},
     };
     use diesel::prelude::*;
-    use std::io::{stdin, Read};
+    use std::{
+        env,
+        io::{stdin, Read},
+    };
 
     pub fn show() {
         let connection = &mut establish_connection();
@@ -83,6 +86,21 @@ pub mod post_actions {
             println!("--------------");
             println!("{}\n", post.body);
         }
+    }
+    pub fn delete() {
+        let id = env::args()
+            .nth(2)
+            .expect("Necessario adicionar um id")
+            .parse::<i32>()
+            .expect("não foi possivel fazer o parse do argumento");
+
+        let connection = &mut establish_connection();
+
+        let num_deleted = diesel::delete(posts.find(id))
+            .execute(connection)
+            .expect("não foi possivel deletar o post");
+
+        println!("Deletado {} posts", num_deleted);
     }
 }
 #[cfg(not(windows))]
