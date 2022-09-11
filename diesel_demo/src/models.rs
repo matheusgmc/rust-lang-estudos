@@ -1,12 +1,14 @@
 use super::schema::*;
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 
-#[derive(Queryable, Debug)]
+#[derive(Queryable)]
 pub struct Post {
     pub id: i32,
     pub title: String,
     pub body: String,
     pub published: bool,
+    pub created_at: NaiveDateTime,
 }
 
 #[derive(Insertable)]

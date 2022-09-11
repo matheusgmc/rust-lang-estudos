@@ -27,7 +27,8 @@ pub mod post_actions {
         for post in results {
             println!("ID: {} - {}", post.id, post.title);
             println!("--------------");
-            println!("{}", post.body);
+            println!("{}\n", post.body);
+            println!("criado: {}", post.created_at);
         }
     }
 
@@ -85,6 +86,7 @@ pub mod post_actions {
             println!("ID: {} - {}", post.id, post.title);
             println!("--------------");
             println!("{}\n", post.body);
+            println!("criado: {}", post.created_at);
         }
     }
     pub fn delete() {
