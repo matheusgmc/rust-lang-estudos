@@ -1,9 +1,12 @@
-use dotenvy::var;
+use dotenvy::dotenv;
 use migration::{DbErr, Migrator, MigratorTrait};
 use sea_orm::{Database, DbConn};
+use std::env;
 
 pub async fn establish_connection() -> Result<DbConn, DbErr> {
-    let database_url = var("DATABASE_URL").expect("database_url must be set");
+    dotenv().ok();
+
+    let database_url = env::var("DATABASE_URL").expect("database_url must be set");
     let connection = Database::connect(database_url)
         .await
         .expect("Failed to setup the database");
